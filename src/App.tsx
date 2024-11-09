@@ -1,10 +1,9 @@
-import { ChatsScreen } from "./pages/chats-screen";
-import { Login } from "./pages/login";
+import { RouterComponent } from "./Routes";
 
 export function App() {
   return (
    <>
-      <ChatsScreen />
+      <RouterComponent />
    </>
   )
 }

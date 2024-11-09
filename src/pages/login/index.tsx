@@ -2,8 +2,13 @@ import { ButtonBase, FormControl, TextField } from "@mui/material"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { object, string } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useContext } from "react"
+import { UserContext } from "../../contexts/user-context"
+import { useNavigate } from "react-router-dom"
 
 export function Login(){
+    const { handleLogin } = useContext(UserContext)
+    const router = useNavigate()
 
     const formLoginSchema = object({
         name: string().min(1, {
@@ -27,6 +32,8 @@ export function Login(){
 
     const handleSubmitLogin: SubmitHandler<FormLoginData> = (data) => {
         console.log(data)
+        handleLogin(data.name, data.numberConnections)
+        router('/chats')
     }
     
 
