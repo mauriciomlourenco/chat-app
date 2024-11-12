@@ -5,6 +5,7 @@ import { UserContext } from "../../contexts/user-context";
 import socketIO from 'socket.io-client';
 import { MessageButton } from "../../components/message-button";
 
+
 type MessageType = {
     callId: string,
     caller: string,
@@ -20,7 +21,13 @@ export function ChatsScreen(){
     const { handleLogout } = useContext(UserContext);
     const socket = socketIO("http://dev.digitro.com", {
               reconnectionDelayMax: 10000,
-              path: "/callcontrol"
+              path: "/callcontrol",
+              // withCredentials: true,
+            //   extraHeaders: {
+            //     "Access-Control-Allow-Origin": "*",
+            //     "Access-Control-Allow-Headers": "origin, x-requested-with, content-type",
+            //     "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS"
+            //   }
           });
     const [messages, setMessages] = useState<MessageType[]>([]);
     const [messageSelected, setMessageSelected] = useState('');   
@@ -32,11 +39,11 @@ export function ChatsScreen(){
             router('/')
         } else {
 
-            const response = socket.emit("USER_CONNECT", {
+            socket.emit("USER_CONNECT", {
                 username: userAux.name,
                 maxCalls: userAux.numberConnections   
             })    
-            console.log("Response: ", response)            
+        
 
         }
 
@@ -60,13 +67,13 @@ export function ChatsScreen(){
             setMessages(state =>[...state, data])
         }
 
-        console.log("idExists", idExists)
+        
 
         
-        console.log("DATA: ", data)
+        
     })
 
-    console.log("Messages: ", messages)
+   
 
     function logout() {
         handleLogout()
@@ -75,6 +82,11 @@ export function ChatsScreen(){
 
     function handleSelectMessage(messageCallId: string) {
         setMessageSelected(messageCallId)
+        const response = socket.emit("NEW_CALL_ANSWERED", {
+            callId: messageCallId,
+        })
+
+        console.log("response msg: ", response)
     }
 
     if (userAux) {

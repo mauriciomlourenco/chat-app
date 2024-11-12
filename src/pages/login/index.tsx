@@ -1,4 +1,4 @@
-import { ButtonBase, FormControl, TextField } from "@mui/material"
+import { ButtonBase, FormControl, TextField, Typography } from "@mui/material"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { object, string } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -38,7 +38,8 @@ export function Login(){
     
 
     return (
-        <div className="w-screen h-screen flex justify-center items-center bg-slate-500">
+        <div className="w-screen h-screen flex flex-col justify-center items-center bg-green-medium">
+            <Typography sx={{ color: 'white', fontSize: '3rem', mb: '2rem' }}>Chat-app</Typography>
             <form 
                 onSubmit={handleSubmit(handleSubmitLogin)}
                 noValidate
@@ -75,13 +76,18 @@ export function Login(){
                         bgcolor: 'rgba(0, 108, 121, 1)',
                         px: '1rem',
                         py: '0.375rem',
-                        borderRadius: '0.25rem',
-                        
+                        borderRadius: '0.25rem',                        
                         ml: 'auto',
-                        mt: '1rem',
+                        mt: '1rem',                        
+                        '&:hover': {
+                            bgcolor: 'rgba(0, 108, 121, 0.85)',
+                            filter: 'alpha(opacity=70)',
+                            transition: "all 0.2s ease-in-out",
+                            shadow: '0px 4px 4px rgba(0, 0, 0, 1)'
+                        }
                     }}
                 >
-                    <span>Entrar</span>
+                    <span className="text-white text-lg">Entrar</span>
                 </ButtonBase>
                 </FormControl>
             </form>
