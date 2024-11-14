@@ -23,7 +23,7 @@ export function ChatsScreen(){
               reconnectionDelayMax: 10000,
               path: "/callcontrol",
               
-              // withCredentials: true,
+            // withCredentials: true,
             //   extraHeaders: {
             //     "Access-Control-Allow-Origin": "*",
             //     "Access-Control-Allow-Headers": "origin, x-requested-with, content-type",
@@ -43,12 +43,8 @@ export function ChatsScreen(){
             socket.emit("USER_CONNECT", {
                 username: userAux.name,
                 maxCalls: userAux.numberConnections   
-            })    
-        
-
+            }) 
         }
-
-
     }, [userAux, router, socket])
 
     socket.on("NEW_CALL", (data: MessageType) => {
@@ -66,15 +62,8 @@ export function ChatsScreen(){
         }
         else {
             setMessages(state =>[...state, data])
-        }
-
-        
-
-        
-        
-    })
-
-   
+        }     
+    })   
 
     function logout() {
         handleLogout()
