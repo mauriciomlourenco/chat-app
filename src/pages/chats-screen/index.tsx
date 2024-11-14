@@ -2,8 +2,8 @@ import { ButtonBase } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/user-context";
-import socketIO from 'socket.io-client';
 import { MessageButton } from "../../components/message-button";
+import io from "socket.io-client";
 
 
 type MessageType = {
@@ -19,9 +19,10 @@ export function ChatsScreen(){
     const userAux = user ? JSON.parse(user) : null;
     const router = useNavigate();
     const { handleLogout } = useContext(UserContext);
-    const socket = socketIO("http://dev.digitro.com", {
+    const socket = io("http://dev.digitro.com", {
               reconnectionDelayMax: 10000,
               path: "/callcontrol",
+              
               // withCredentials: true,
             //   extraHeaders: {
             //     "Access-Control-Allow-Origin": "*",
@@ -81,6 +82,7 @@ export function ChatsScreen(){
     }
 
     function handleSelectMessage(messageCallId: string) {
+        console.log("messageCallId: " + messageCallId)
         setMessageSelected(messageCallId)
         const response = socket.emit("NEW_CALL_ANSWERED", {
             callId: messageCallId,
